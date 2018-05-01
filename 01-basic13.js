@@ -1,12 +1,14 @@
 // Print 1-255
-const printRange = (start = 1, end = 255) => (steps = 1) => {
+// printRange(1, 255)(1)
+const printRange = (start, end) => steps => {
   console.log(start);
   if (start === end) return;
-  printRange(start + steps)(steps);
+  return printRange(start + steps, end)(steps);
 };
 
 // Print Odds 1-255
-const printOddsRange = () => printRange()(2);
+// printRange(1, 255)(2)
+printRange(1, 255)(2);
 
 // Print Ints and Sum 0-255
 const printIntsAndSum0To255 = (int = 0, sum = 1) => {
