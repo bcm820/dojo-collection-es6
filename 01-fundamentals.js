@@ -72,3 +72,9 @@ const swapNegatives = (arr, str) =>
     if (el < 0) return str;
     return el;
   });
+
+// Countdown
+const countdown = (n, arr = []) => {
+  if (n === -1) return arr;
+  return countdown(n - 1, [...arr, n]);
+};
