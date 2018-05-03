@@ -22,6 +22,14 @@ const fibonacci = i => {
   return fibonacci(i - 2) + fibonacci(i - 1);
 };
 
+// isPrime
+// Given a number, evaluate whether it is a prime number (divisible only by itself and 1).
+const isPrime = (n, next = n - 1) => {
+  if (next === 1) return true;
+  if (n % next === 0) return false;
+  return isPrime(n, next - 1);
+};
+
 // Sum to One
 // Given an integer, sum its digits until the sum is only one digit. Return that digit.
 // e.g. sumToOne(928) -> 9 + 2 + 8 === 19 -> 1 + 9 === 10 -> 1 + 0 === 1
@@ -30,7 +38,7 @@ const sumToOne = n => {
   return sumToOne(
     n
       .toString()
-      .split("")
+      .split('')
       .reduce((sum, el) => parseInt(sum, 10) + parseInt(el, 10))
   );
 };
@@ -47,4 +55,35 @@ const generateCoinChange = cents => {
     cents %= amount;
   });
   console.log(bank);
+};
+
+// Extract-o-Matic
+// Given a number and a digit number, return the numeral value of that digit.
+// 0 represents the ones digit, 1 represents the tens, etc.
+// e.g. extractDigit(1824, 2) === 8; extractDigit(1824, 0) === 4
+const extractDigit = (n, i) => {
+  n = n.toString();
+  if (i > n.length - 1) return 0;
+  n = n.split('').reverse();
+  return parseInt(n[i], 10);
+};
+
+// Extract-o-Matic Pt. 2
+// Handle negative digit values; -1 represents the tenths digit, etc.
+// e.g. extractDigit(123.45, -1) === 4
+const extractAnyDigit = (n, i) => {
+  if (i > -1) return extractDigit(n, i);
+  n = n.toString();
+  const decimal = n.indexOf('.');
+  if (!decimal) return 0;
+  n = n.substring(decimal);
+  return parseInt(n[i * i], 10);
+};
+
+// Most Significant Digit
+// Given a number of any size, return the left-most digit.
+// Don't parse the number as a string!
+const mostSignificant = (n, p = 1) => {
+  if (n < 10) return Math.floor(n);
+  return mostSignificant(n / (10 * p), p++);
 };
