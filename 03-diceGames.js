@@ -8,32 +8,22 @@
  * 6. Create avgStats(n), which calls roll() n times and prints the average of all rolls.
  */
 
-const roll = () => {
-  const n = Math.ceil(Math.random() * 6);
-  console.log(`You rolled a ${n}.`);
-  return n;
-};
+const repeat = require("./_utils").repeat;
 
-/**
- * Utility function for repeating function calls n times
- * @param {any} n => function, ...args
- * @returns an array of values returned from repeated function calls
- */
-const repeat = n => (func, ...args) =>
-  Array(n)
-    .fill(0)
-    .map(el => func(...args));
+const roll = () => Math.ceil(Math.random() * 6);
 
 const playFives = n => {
-  repeat(n)(() => {
-    const roll = roll();
-    if (roll === 5) console.log('Lucky!');
-    return roll;
+  const results = repeat(n)(roll);
+  results.forEach(turn => {
+    turn === 5
+      ? console.log("You rolled a lucky 5!")
+      : console.log(`You rolled a ${turn}.`);
   });
 };
 
 const playStats = (n = 8) => {
-  const stats = repeat(n)(() => roll());
+  const stats = repeat(n)(roll);
+  console.log(`Your scoresheet: ${stats}`);
   console.log(`Your Best Roll: ${Math.max(...stats)}`);
   console.log(`Your Worst Roll: ${Math.min(...stats)}`);
   return stats;
