@@ -19,9 +19,10 @@ const roll = () => {
  * @param {any} n => function, ...args
  * @returns an array of values returned from repeated function calls
  */
-function repeat(n) {
-  return (func, ...args) => new Array(n).fill(0).map(el => func(...args));
-}
+const repeat = n => (func, args) =>
+  Array(n)
+    .fill(0)
+    .map(el => func(...args));
 
 const playFives = n => {
   repeat(n)(() => {
