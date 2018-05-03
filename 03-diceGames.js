@@ -19,7 +19,7 @@ const roll = () => {
  * @param {any} n => function, ...args
  * @returns an array of values returned from repeated function calls
  */
-const repeat = n => (func, args) =>
+const repeat = n => (func, ...args) =>
   Array(n)
     .fill(0)
     .map(el => func(...args));
