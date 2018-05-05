@@ -1,5 +1,5 @@
 // Arrays Pt. 1
-// No built-in methods allowed!
+// No built-in array methods allowed!
 
 // Push Front
 // Given array and value, insert value at the beginning.
@@ -34,3 +34,5 @@ const popFront = (arr, idx = 0, value = arr[0]) => {
   arr[idx] = arr[idx + 1];
   return popFront(arr, idx + 1, value);
 };
+
+// Remove At
