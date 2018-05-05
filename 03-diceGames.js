@@ -6,9 +6,11 @@
  * 4. Create sumStats(), which calls playStats() and prints the sum of all 8 rolls.
  * 5. Create practice(n), which calls roll() n times and prints the lowest, highest, and sum.
  * 6. Create avgStats(n), which calls roll() n times and prints the average of all rolls.
+ * 7. Implement doubles() using a 20-sided die. Roll until you get a value twice in a row.
+ *    Display number of rolls, min, max, and average.
  */
 
-const repeat = require("./_utils").repeat;
+const repeat = require('./_utils').repeat;
 
 const roll = () => Math.ceil(Math.random() * 6);
 
@@ -16,7 +18,7 @@ const playFives = n => {
   const results = repeat(n)(roll);
   results.forEach(turn => {
     turn === 5
-      ? console.log("You rolled a lucky 5!")
+      ? console.log('You rolled a lucky 5!')
       : console.log(`You rolled a ${turn}.`);
   });
 };
@@ -42,3 +44,18 @@ const avgStats = n => {
   console.log(`Average: ${avg}`);
   return avg;
 };
+
+const roll20 = () => Math.ceil(Math.random() * 20);
+const doubles = (rolls = []) => {
+  if (rolls.length && rolls[rolls.length - 1] === rolls[rolls.length - 2]) {
+    console.log('You rolled doubles!');
+    console.log(`It took you ${rolls.length} rolls.`);
+    console.log(`Best: ${Math.max(...rolls)}  Worst: ${Math.min(...rolls)}`);
+    console.log(
+      `Average: ${rolls.reduce((acc, curr) => acc + curr) / rolls.length}`
+    );
+    return;
+  }
+  return doubles([...rolls, roll20()]);
+};
+doubles();
