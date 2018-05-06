@@ -1,5 +1,6 @@
 // Arrays Pt. 1
-// No built-in array methods allowed!
+// No built-in methods allowed (unless implemented in utils)
+// Use recursion where possible for practice
 
 // Push Front
 // Given array and value, insert value at the beginning.

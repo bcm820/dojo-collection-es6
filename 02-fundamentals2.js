@@ -1,3 +1,7 @@
+// Fundamentals 2
+// No built-in methods allowed (unless implemented in utils)
+// Use recursion where possible for practice
+
 // Sigma
 // Given a number, return the sum of all positive integers up to n (inclusive)
 // e.g. sigma(5) === 5 + 4 + 3 + 2 + 1 === 15
@@ -38,7 +42,7 @@ const sumToOne = n => {
   return sumToOne(
     n
       .toString()
-      .split('')
+      .split("")
       .reduce((sum, el) => parseInt(sum, 10) + parseInt(el, 10))
   );
 };
@@ -64,7 +68,7 @@ const generateCoinChange = cents => {
 const extractDigit = (n, i) => {
   n = n.toString();
   if (i > n.length - 1) return 0;
-  n = n.split('').reverse();
+  n = n.split("").reverse();
   return parseInt(n[i], 10);
 };
 
@@ -74,7 +78,7 @@ const extractDigit = (n, i) => {
 const extractAnyDigit = (n, i) => {
   if (i > -1) return extractDigit(n, i);
   n = n.toString();
-  const decimal = n.indexOf('.');
+  const decimal = n.indexOf(".");
   if (!decimal) return 0;
   n = n.substring(decimal);
   return parseInt(n[i * i], 10);

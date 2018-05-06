@@ -10,30 +10,29 @@
  *    Display number of rolls, min, max, and average.
  */
 
-const repeat = require('./_utils').repeat;
-
-const roll = () => Math.ceil(Math.random() * 6);
+const utils = require("./_utils");
+const { log, repeat } = utils;
+const roll = (n = 6) => Math.ceil(Math.random() * n);
+const playDice = repeat(roll);
 
 const playFives = n => {
-  const results = repeat(n)(roll);
+  const results = placeDice(n);
   results.forEach(turn => {
-    turn === 5
-      ? console.log('You rolled a lucky 5!')
-      : console.log(`You rolled a ${turn}.`);
+    turn === 5 ? log("You rolled a lucky 5!") : log(`You rolled a ${turn}.`);
   });
 };
 
 const playStats = (n = 8) => {
-  const stats = repeat(n)(roll);
-  console.log(`Your scoresheet: ${stats}`);
-  console.log(`Your Best Roll: ${Math.max(...stats)}`);
-  console.log(`Your Worst Roll: ${Math.min(...stats)}`);
+  const stats = placeDice(n);
+  log(`Your scoresheet: ${stats}`);
+  log(`Your Best Roll: ${Math.max(...stats)}`);
+  log(`Your Worst Roll: ${Math.min(...stats)}`);
   return stats;
 };
 
 const sumStats = n => {
   const sum = playStats(n).reduce((acc, curr) => acc + curr);
-  console.log(`Total Score: ${sum}`);
+  log(`Total Score: ${sum}`);
   return sum;
 };
 
@@ -41,21 +40,17 @@ const practice = n => sumStats(n);
 
 const avgStats = n => {
   const avg = sumStats(n) / n;
-  console.log(`Average: ${avg}`);
+  log(`Average: ${avg}`);
   return avg;
 };
 
-const roll20 = () => Math.ceil(Math.random() * 20);
 const doubles = (rolls = []) => {
   if (rolls.length && rolls[rolls.length - 1] === rolls[rolls.length - 2]) {
-    console.log('You rolled doubles!');
-    console.log(`It took you ${rolls.length} rolls.`);
-    console.log(`Best: ${Math.max(...rolls)}  Worst: ${Math.min(...rolls)}`);
-    console.log(
-      `Average: ${rolls.reduce((acc, curr) => acc + curr) / rolls.length}`
-    );
+    log("You rolled doubles!");
+    log(`It took you ${rolls.length} rolls.`);
+    log(`Best: ${Math.max(...rolls)}  Worst: ${Math.min(...rolls)}`);
+    log(`Average: ${rolls.reduce((acc, curr) => acc + curr) / rolls.length}`);
     return;
   }
-  return doubles([...rolls, roll20()]);
+  return doubles([...rolls, roll(20)]);
 };
-doubles();

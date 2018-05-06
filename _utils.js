@@ -1,38 +1,63 @@
 /**
- * Call a function n times with the same args,
- * returning an array of returned values
- * @param {number} n. How many times to repeat
- * @returns {function}. The curried repeater
- * @param {function} fn. What function to call
- * @param {any} ...args. Optional arguments
- * @returns [any] Values returned from each function call
- * e.g. repeat(5)(fn, arg1, arg2, arg3)
+ * Simple function to log a value
+ * and return the value logged
+ * @param {any} value
+ * @returns
  */
-const repeat = n => (fn, ...args) =>
-  Array(n)
-    .fill(0)
-    .map(el => fn(...args));
+const log = value => {
+  console.log(value);
+  return value;
+};
 
 /**
- * Call a function n times with different args,
+ * Call a function n times with the same args,
  * returning an array of returned values
- * @param {number} n. How many times to call
- * @returns {function}. The curried repeater
+ * e.g. repeat(fn)(5)(arg1, arg2, arg3)
  * @param {function} fn. What function to call
- * @param {any} ...args. Arguments for each (null if skipping)
+ * @param {number} n. How many times to repeat
+ * @param {any} ...args. Optional arguments
  * @returns [any] Values returned from each function call
- * e.g. repeatWith(5)(fn, arg1, arg2, null, [arg3a, arg3b])
  */
-const repeatWith = n => (fn, ...args) =>
+const repeat = fn => n =>
   Array(n)
     .fill(0)
-    .map((el, i) => {
-      if (Array.isArray(args[i])) return fn(...args[i]);
-      else if (args[i]) return fn(args[i]);
-      else return fn();
-    });
+    .map(el => fn());
+
+/**
+ * Call a function with a new arg/args each call,
+ * returning an array of returned values
+ * e.g. map(fn)(arg1, arg2, null, [arg3a, arg3b])
+ * @param {function} fn. What function to call
+ * @param {any} ...args. Arguments for each
+ * @returns [any] Values returned from each function call
+ */
+const map = fn => (...args) =>
+  args.map(el => {
+    if (Array.isArray(el)) return fn(...el);
+    else return fn(el);
+  });
+
+/**
+ * Call a function with a new arg/args each call,
+ * then reduce their returned values into one value
+ * via a given reducer function
+ * e.g. reduce(fn)((a, b) => a + b)(arg1, arg2, null, [arg3a, arg3b])
+ * @param {function} fn. What function to call
+ * @param {function} reducer. The reducer
+ * @param {any} ...args. Arguments for each
+ * @returns [any] Values returned from each function call
+ */
+const reduce = fn => reducer => (...args) =>
+  args
+    .map(el => {
+      if (Array.isArray(el)) return fn(...el);
+      else return fn(el);
+    })
+    .reduce(reducer);
 
 module.exports = {
+  log,
   repeat,
-  callEach
+  map,
+  reduce
 };
