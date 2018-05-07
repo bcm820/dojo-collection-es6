@@ -2,8 +2,9 @@
 // No built-in methods allowed (unless implemented in utils)
 // Use recursion where possible for practice
 const utils = require("./_utils");
-const { log, map, reduce } = utils;
-const logEach = map(log);
+const helpers = require("./_helpers");
+const { log, map, flatMap } = utils;
+const { logEach, sumEach, squareEach } = helpers;
 
 // Print 1-255
 // printRange(1, 255)
@@ -27,31 +28,33 @@ const printRangeAndSum = (start, end, sum = 0) => {
 
 // Print Array Values
 // printEach(arr)
-let printEach = arr => arr.forEach(el => log(el));
+let printEach;
 printEach = (arr, idx = 0) => {
   if (!arr[idx]) return;
   log(arr[idx]);
   printEach(arr, idx + 1);
 };
+printEach = arr => arr.forEach(el => log(el));
 printEach = arr => logEach(...arr);
 
 // Print Max of Array
 // printMaxOfArray(arr);
-let printMaxOfArray = arr => log(Math.max(...arr));
+let printMaxOfArray;
 printMaxOfArray = (arr, idx = 0, max = arr[0]) => {
   if (idx === arr.length) return log(max);
   if (arr[idx + 1] > max) max = arr[idx + 1];
   return printMaxOfArray(arr, idx + 1, max);
 };
+printMaxOfArray = arr => log(Math.max(...arr));
 
 // Print Avg of Array
 // printAvgOfArray(arr);
-let printAvgOfArray = arr =>
-  log(arr.reduce((acc, cur) => acc + cur) / arr.length);
+let printAvgOfArray;
 printAvgOfArray = (arr, idx = 0, sum = 0) => {
   if (!arr[idx]) return log(sum / arr.length);
   return printAvgOfArray(arr, idx + 1, sum + arr[idx]);
 };
+printAvgOfArray = arr => log(sumEach(...arr) / 2);
 
 // Return Odds Array 1-255
 // oddsArray();
@@ -62,8 +65,8 @@ const oddsArray = (arr = [], i = 1) => {
 
 // Square Array Values
 // squareArrayVals(arr);
-let squareArrayVals = arr => arr.map(el => el * el);
-const squareEach = map(val => val * val);
+let squareArrayVals;
+squareArrayVals = arr => arr.map(val => val * val);
 squareArrayVals = arr => squareEach(...arr);
 
 // Print Array Count Greater Than Y

@@ -4,7 +4,7 @@
 
 // Push Front
 // Given array and value, insert value at the beginning.
-let pushFront = (arr, value) => [value, ...arr];
+let pushFront;
 pushFront = (arr, value, idx = arr.length - 1) => {
   if (idx === 0) {
     [arr[0], arr[1]] = [value, arr[0]];
@@ -13,6 +13,7 @@ pushFront = (arr, value, idx = arr.length - 1) => {
   arr[idx + 1] = arr[idx];
   return pushFront(arr, value, idx - 1);
 };
+pushFront = (arr, value) => [value, ...arr];
 
 // Insert At
 // Given array, index, and value, insert value at the given index.
@@ -35,5 +36,3 @@ const popFront = (arr, idx = 0, value = arr[0]) => {
   arr[idx] = arr[idx + 1];
   return popFront(arr, idx + 1, value);
 };
-
-// Remove At

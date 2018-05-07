@@ -1,6 +1,8 @@
 // Fundamentals 2
 // No built-in methods allowed (unless implemented in utils)
 // Use recursion where possible for practice
+const utils = require("./_utils");
+const { log, flatMap } = utils;
 
 // Sigma
 // Given a number, return the sum of all positive integers up to n (inclusive)
@@ -37,14 +39,22 @@ const isPrime = (n, next = n - 1) => {
 // Sum to One
 // Given an integer, sum its digits until the sum is only one digit. Return that digit.
 // e.g. sumToOne(928) -> 9 + 2 + 8 === 19 -> 1 + 9 === 10 -> 1 + 0 === 1
-const sumToOne = n => {
+let sumToOne;
+sumToOne = n => {
   if (n.toString().length === 1) return n;
   return sumToOne(
     n
       .toString()
       .split("")
-      .reduce((sum, el) => parseInt(sum, 10) + parseInt(el, 10))
+      .map(d => parseInt(d, 10))
+      .reduce((sum, d) => sum + d, 0)
   );
+};
+sumToOne = n => {
+  if (n.toString().length === 1) return n;
+  const digitStrings = n.toString().split("");
+  const digitFlatMapper = flatMap(d => parseInt(d, 10))((a, b) => a + b);
+  return sumToOne(digitFlatMapper(...digitStrings));
 };
 
 // Generate Coin Change
@@ -58,7 +68,7 @@ const generateCoinChange = cents => {
     if (bank[coin] === 0) delete bank[coin];
     cents %= amount;
   });
-  console.log(bank);
+  return log(bank);
 };
 
 // Extract-o-Matic

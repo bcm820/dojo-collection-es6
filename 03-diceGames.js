@@ -11,19 +11,21 @@
  */
 
 const utils = require("./_utils");
+const helpers = require("./_helpers");
 const { log, repeat } = utils;
+const { sumEach } = helpers;
 const roll = (n = 6) => Math.ceil(Math.random() * n);
 const playDice = repeat(roll);
 
 const playFives = n => {
-  const results = placeDice(n);
+  const results = playDice(n);
   results.forEach(turn => {
     turn === 5 ? log("You rolled a lucky 5!") : log(`You rolled a ${turn}.`);
   });
 };
 
 const playStats = (n = 8) => {
-  const stats = placeDice(n);
+  const stats = playDice(n);
   log(`Your scoresheet: ${stats}`);
   log(`Your Best Roll: ${Math.max(...stats)}`);
   log(`Your Worst Roll: ${Math.min(...stats)}`);
@@ -31,7 +33,7 @@ const playStats = (n = 8) => {
 };
 
 const sumStats = n => {
-  const sum = playStats(n).reduce((acc, curr) => acc + curr);
+  const sum = flatMap(n => n)((a, b) => a + b)(...playDice(n));
   log(`Total Score: ${sum}`);
   return sum;
 };
@@ -49,7 +51,7 @@ const doubles = (rolls = []) => {
     log("You rolled doubles!");
     log(`It took you ${rolls.length} rolls.`);
     log(`Best: ${Math.max(...rolls)}  Worst: ${Math.min(...rolls)}`);
-    log(`Average: ${rolls.reduce((acc, curr) => acc + curr) / rolls.length}`);
+    log(`Average: ${sumEach(...rolls) / rolls.length}`);
     return;
   }
   return doubles([...rolls, roll(20)]);

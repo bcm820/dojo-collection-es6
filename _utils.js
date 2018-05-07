@@ -42,12 +42,13 @@ const map = fn => (...args) =>
  * then flatten an array of their returned values
  * into one value via a given reducer function
  * e.g. flatMap(fn)((a, b) => a + b)(arg1, arg2, null, [arg3a, arg3b])
- * @param function fn. What function to call
+ * @param function fn. What function to call (map by default)
  * @param function reducer. The reducer
  * @param any ...args. Arguments for each
  * @returns [any] Values returned from each function call
  */
-const flatMap = fn => reducer => (...args) => map(fn)(...args).reduce(reducer);
+const flatMap = (fn = el => el) => reducer => (...args) =>
+  map(fn)(...args).reduce(reducer);
 
 module.exports = {
   log,
